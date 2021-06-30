@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backact"
+    tools:context="com.papanews.ak.activity_notification">
+
+    <ScrollView
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/notification"/>
+
+
+            <RadioGroup
+                android:layout_gravity="center"
+                android:id="@+id/rg5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:buttonTint="#E30F0F"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/white"
+                    android:id="@+id/regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#3F51B5"
+                    android:checked="true"
+                    android:textSize="25dp"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="Regualr Notification"
+                    tools:ignore="OnClick" />
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:buttonTint="#E30F0F"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/nonoti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#3F51B5"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="No Notification"
+                    tools:ignore="OnClick" />
+
+                <RadioButton
+                    android:padding="5dp"
+                    android:buttonTint="#E30F0F"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/not"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#3F51B5"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="Custom Notification"
+                    tools:ignore="OnClick" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:fontFamily="@font/lato"
+                android:textColor="@color/white"
+                android:id="@+id/fal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_below="@+id/rg5"
+                android:visibility="gone"
+                android:text="*You will get notification daily at 8:00 PM*"
+                android:layout_centerHorizontal="true"
+                />
+
+            <LinearLayout
+                android:layout_marginBottom="40dp"
+                android:visibility="visible"
+                android:id="@+id/shownot"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TimePicker
+                    android:id="@+id/timePicker1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:fontFamily="@font/lato"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_pick"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:backgroundTint="#D85F5F"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/roundgray_new"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:onClick="setTime"
+                    android:text="@string/time_save"
+                    tools:ignore="OnClick" />
+
+                <TextView
+                    android:fontFamily="@font/lato"
+                    android:layout_gravity="center"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/time_current"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:fontFamily="@font/lato"
+                    android:layout_gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/time_selected"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+
+</RelativeLayout>

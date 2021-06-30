@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backact"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.papanews.ak.uploadvideo">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:backgroundTint="#0D7BD3"
+                android:visibility="gone"
+                android:id="@+id/prog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="300dp"
+                />
+
+            <Button
+                android:id="@+id/savedPosts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Saved Posts"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/uvimg"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/uvimg"/>
+
+            <TextView
+                android:id="@+id/uvt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/uvimg"
+                android:text="Upload News details"
+                android:textSize="28dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/lstextcolor"/>
+
+            <EditText
+                android:fontFamily="@font/lato"
+                android:id="@+id/t1"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/uvt1"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter News title"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:maxLines="20"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:fontFamily="@font/lato"
+                android:id="@+id/t2"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/t1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter Your Short Description"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:maxLines="50"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+
+            <RelativeLayout
+                android:gravity="center"
+                android:id="@+id/downdwon"
+                android:layout_below="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/pathvideo"
+                    android:visibility="gone"
+                    android:padding="10dp"
+                    android:background="@drawable/image_bg"
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:textColor="#ffffff"
+                    android:text="video Path"
+                    android:textSize="14dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/image_bg"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:gravity="center"
+                android:id="@+id/bbr"
+                android:layout_below="@+id/downdwon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:fontFamily="@font/lato"
+                    android:id="@+id/browse"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_bg"
+                    android:padding="10dp"
+                    android:text="Browse Image"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/browusevideo"
+                    android:layout_marginLeft="10dp"
+                    android:padding="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/browse"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_bg"
+                    android:text="Browse Video"
+                    android:textColor="#ffffff"
+                    />
+
+            </RelativeLayout>
+
+
+            <EditText
+                android:fontFamily="@font/lato"
+                android:id="@+id/longPhp"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bbr"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter Your Long Description"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:maxLines="100"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/videoId"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/longPhp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter Your Video URL"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:lines="1"
+                android:maxLines="10"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/NewsSource"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/videoId"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter Your Soruce name"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:lines="1"
+                android:maxLines="10"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/uvct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/NewsSource"
+                android:text="Select Categorie"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/lstextcolor"/>
+
+            <Spinner
+                android:visibility="gone"
+                android:id="@+id/spinner1"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/uvct"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:background="@drawable/spinner_bg"
+                android:foregroundTint="@color/lstextcolor"
+                android:backgroundTintMode="add"
+                android:padding="10dp" />
+
+
+            <ImageView
+                android:id="@+id/srcimage"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/NewsSource"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+            <Button
+                android:id="@+id/selectImage"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/srcimage"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:text="select Image"
+                android:visibility="gone" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner1"
+                android:hint="Search Location"
+                android:visibility="gone" />
+
+
+            <EditText
+                android:fontFamily="@font/lato"
+                android:id="@+id/location"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/autocomplete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:gravity="top"
+                android:hint="Enter Your News Location"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:lines="1"
+                android:maxLines="10"
+                android:padding="10dp"
+                android:textColor="@color/ettextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="20dp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/location"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/lstextcolor"
+                android:text="Supported Language"
+                android:textSize="20dp" />
+
+            <CheckBox
+                android:visibility="gone"
+                android:id="@+id/English"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lang"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:backgroundTint="#3F51B5"
+                android:textColor="@color/lstextcolor"
+                android:text="English" />
+
+
+            <CheckBox
+                android:visibility="gone"
+                android:id="@+id/hindi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/English"
+                android:backgroundTint="#3F51B5"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/lstextcolor"
+                android:text="hindi" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hindi"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:text="Want Video audio"
+                android:textColor="@color/lstextcolor"
+                android:textSize="20dp" />
+
+
+            <RadioGroup
+                android:visibility="gone"
+                android:id="@+id/rg5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radio"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rg5r1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#3F51B5"
+                    android:checked="true"
+                    android:onClick="onRadioButtonClicked"
+                    android:textColor="@color/lstextcolor"
+                    android:text="NO"
+                    tools:ignore="OnClick" />
+
+                <RadioButton
+                    android:id="@+id/rg5r2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#3F51B5"
+                    android:onClick="onRadioButtonClicked"
+                    android:textColor="@color/lstextcolor"
+                    android:text="YES"
+                    tools:ignore="OnClick" />
+
+            </RadioGroup>
+
+            <TextView
+                android:fontFamily="@font/lato"
+                android:id="@+id/selectDate"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rg5"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lstextcolor"
+                android:layout_marginLeft="30dp"
+                android:padding="8dp"
+                android:text="Select date"
+                android:textColor="@color/lstextcolor"
+                android:textColorHint="@color/ettextcolor"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <DatePicker
+                android:id="@+id/datePicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/selectDate"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/lstextcolor"
+                android:background="@color/lstextcolor"
+                android:layout_marginTop="20dp"
+                android:visibility="visible" />
+
+
+            <!--            <Button-->
+            <!--                android:id="@+id/button1"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@+id/datePicker1"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_marginLeft="80dp"-->
+            <!--                android:layout_marginRight="80dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:background="@drawable/button_bg"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="5dp"-->
+            <!--                android:text="Get Date"-->
+            <!--                android:textColor="#ffffff" />-->
+
+
+
+
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/datePicker1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/button_bg"
+                android:padding="10dp"
+                android:text="Upload to Server"
+                android:textColor="#FFF" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/upload"/>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

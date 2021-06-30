@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false"
+    android:focusable="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:background="@drawable/ic_papabg1"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/doodle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/datenews"
+        android:layout_marginTop="210dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10th May 2021"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:layout_marginLeft="20dp"
+        tools:ignore="MissingConstraints" />
+
+
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:clickable="true"
+        android:id="@+id/card_stack_view"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/datenews">
+
+    </com.yuyakaido.android.cardstackview.CardStackView>
+
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/nonews"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*No news available for now*"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/lato"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        tools:ignore="MissingConstraints" />
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/cv"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:background="@drawable/roundgray"-->
+    <!--            android:layout_alignParentBottom="true"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:layout_marginTop="4dp"-->
+    <!--            tools:ignore="MissingConstraints">-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Hello User...."-->
+    <!--                android:fontFamily="@font/lato"-->
+    <!--                android:textSize="16dp"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                />-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:layout_marginBottom="5dp"-->
+    <!--                >-->
+    <!--                <TextView-->
+    <!--                    android:layout_marginTop="5dp"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:fontFamily="@font/lato"-->
+    <!--                    android:text="In our platform you can also create your own news based on sources and upload it into out platform"-->
+    <!--                    android:textSize="12dp"-->
+    <!--                    android:textColor="#ffffff"-->
+    <!--                    android:paddingRight="80dp"-->
+    <!--                    />-->
+
+    <!--                <ImageView-->
+    <!--                    android:layout_width="40dp"-->
+    <!--                    android:layout_height="40dp"-->
+    <!--                    android:src="@drawable/videocamera"-->
+    <!--                    android:layout_toRightOf="@+id/cvt"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_marginLeft="-70dp"-->
+    <!--                    />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            <TextView-->
+    <!--                android:layout_marginBottom="5dp"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Submit Content"-->
+    <!--                android:textSize="16dp"-->
+    <!--                android:fontFamily="@font/lato"-->
+    <!--                android:layout_marginTop="3dp"-->
+    <!--                android:textColor="#D59F17"-->
+    <!--                android:padding="4dp"-->
+
+    <!--                />-->
+    <!--        </LinearLayout>-->
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/nrmlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You Have viewed all the news for today"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/lato"
+            android:layout_marginTop="460dp"
+            tools:ignore="MissingConstraints" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:visibility="gone"
+            android:clickable="true"
+            android:layout_marginTop="500dp"
+            android:id="@+id/rewind"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Rewind"
+            android:src="@drawable/rewind"
+            app:tint="#FFF"
+            android:focusable="true"
+            tools:ignore="MissingConstraints" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/newTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="false"
+            android:fontFamily="@font/days_one"
+            android:text="Politics"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="40dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

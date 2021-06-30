@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">PapaNews</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+
+    <string name="temporary">Amid a formidable rise in coronavirus cases in Delhi, Chief Minister Arvind Kejriwal stated that COVID-19 situation in the national capital will be under control in 7-10 days."</string>
+
+
+    <string name="dummy_content">              NEW DELHI: West Bengal chief minister Mamata Banerjee on Saturday accused the Prime Minister\'s Office (PMO) of humiliating her after a brief meeting with PM Modi over the devastation caused by Cyclone Yaas took a controversial turn. However, the BJP hit back at the TMC supremo and alleged that it was Mamata who had insulted the PM Modi.On Friday, the central government as well as several senior ministers had accused Mamata of skipping the meeting and making PM Modi wait.Addressing the controversy, Mamata said today she felt insulted since BJP leaders and the state governor were called for the cyclone review meeting which was meant to be between her and the Prime Minister."When we reached, meeting had started. They asked us to sit, I asked them to allow us a minute to submit the report. (The) SPG told us that meeting will be after 1 hour. I saw empty chairs in conference room; was told that meeting was between CM and PM but why were there other BJP leaders," the Trinamool chief asked.Mamata further said that she is ready to even touch PM Modi\'s feet for the welfare of the people but won\'t tolerate insults."If Prime Minister asked me to touch his feet for welfare of the people of Bengal, I am ready to do that, but I should not be insulted," she said.Taking a dig at the Prime Minister, Mamata accused Modi of playing "vendetta politics" since he is yet to come to terms with the BJP\'s defeat in the recent West Bengal elections She also urged the Prime Minister to withdraw Friday order recalling the West Bengal chief secretary."There should be some courtesy. The Centre is not letting the state work. Bengal is my priority and ll never put it in danger. I will remain a security guard for the people here," she said.The West Bengal chief minister added that the tweets posted by several senior ministers over the issue were meant to "tarnish her image". </string>
+    <string name="adusc">Watch short videos on latest news from your favorite sources on
+
+Papa news is a news app that selects latest and best news from multiple national and international sources and summarises them in to a short video  to help you stay informed of the current affairs. Whether it’s the latest government policies or shakeups in bollywood, we get them covered and delivered super fast! Get updated with the latest news and current affairs in a jiffy!
+
+
+
+Features:
+
+	◉ Introducing SEARCH for easier access to information
+		• Search lets you find any short, recent or old, by simply typing in a keyword in the search box
+		• Looking for a particular short, or shorts related to a past/ongoing topic? We got it all covered
+		• Our search bot also suggests topics related to your search query, so you stay informed end-to-end
+
+
+		• Original story is just a click away!
+
+	◉ My Feed – A feed of latest stories, videos and other content personalised only for you!
+		• Papa news  intelligently learns your preferences as you swipe, and displays stories personalised for you in ‘My Feed’
+
+	◉ News Categories - A vast variety in the same app
+		• papa news curates all types of news and headlines from topics like India, politics, entertainment, business, technology, startups, world, sports and hatke – all in one place
+		• News is sourced from various categories and various sources, making sure that you always get the best
+		• Get limited daily notifications for the most important news and breaking news of the day
+		• Place our widget on your home screen to browse through headlines
+	Articles are sourced from various publishers and news channels like Reuters, Indian Express, PTI, The Guardian, NYT, Outlook, TechCrunch, Sportskeeda and many more.
+Papa is the fastest way for you to stay updated with current affairs to get ahead and prepare for competitive exams like UPSC, CAT, XAT and other central and state government job exams.
+
+
+
+User news submission and moderation
+User can submit news as a local source and
+There will be a moderation of news before publishing it via admins</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_select_category">select_category</string>
+
+    <string name="title_activity_saved_posts">saved_posts</string>
+
+    <string name="facebook_app_id">239348004261289</string>
+    <string name="fb_login_protocol_scheme">fb239348004261289</string>
+
+    <!-- Strings used for fragments for navigation -->
+
+<!--	time picker-->
+    <string name="time_pick">Pick the time and press save button</string>
+	<string name="time_save">Save</string>
+	<string name="time_selected"></string>
+	<string name="time_current">Notification time set at:</string>
+
+
+	<string name="skip">SKIP</string>
+	<string name="start">GOT IT</string>
+
+	<string name="slide_1_title">Welcome to PapaNews!</string>
+	<string name="slide_1_desc">Here we provide you all the latest News in our application with clear explanation.</string>
+
+	<string name="slide_2_title">Live Feeds</string>
+	<string name="slide_2_desc">You can also see the live video of the news.</string>
+
+</resources>

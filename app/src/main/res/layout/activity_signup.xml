@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signmain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bgbg"
+    tools:context="com.papanews.ak.SignUp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            android:id="@+id/textView"
+            >
+
+            <ImageView
+                android:layout_marginTop="60dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/logimg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/papcircle" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/tt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logimg"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/times_new_roman"
+                android:text="Papa News"
+                android:textColor="#ffffff"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/tt"
+                android:id="@+id/one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/times_new_roman"
+                android:layout_marginLeft="30dp"
+                android:text="Sign up"
+                android:textColor="#ffffff"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                tools:targetApi="jelly_bean"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:layout_below="@+id/one"
+                android:layout_centerHorizontal="true"
+                android:layout_width="0dp"
+                android:layout_height="10dp"/>
+
+
+
+        </RelativeLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:hint="Fullname"
+            android:textColor="@color/lstextcolorinv"
+            android:textColorHint="@color/lstextcolorinv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/bgbgedit"
+                android:id="@+id/fullname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="@color/lstextcolorinv"
+                android:textColorHint="@color/lstextcolorinv"
+                android:drawableEnd="@drawable/ic_baseline_supervised_user_circle_24"
+                android:drawableRight="@drawable/ic_baseline_supervised_user_circle_24"
+                android:drawableTint="@color/lstextcolorinv"
+                android:singleLine="true"
+                android:fontFamily="@font/lato"
+                android:padding="20dp"
+                tools:targetApi="jelly_bean"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Email"
+            android:textColor="@color/lstextcolorinv"
+            android:textColorHint="@color/lstextcolorinv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/bgbgedit"
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableEnd="@drawable/ic_baseline_email_24"
+                android:drawableRight="@drawable/ic_baseline_email_24"
+                android:textColor="@color/lstextcolorinv"
+                android:textColorHint="@color/lstextcolorinv"
+                android:singleLine="true"
+                android:fontFamily="@font/lato"
+                android:padding="20dp"
+                tools:targetApi="jelly_bean"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Username"
+            android:textColor="@color/lstextcolorinv"
+            android:textColorHint="@color/lstextcolorinv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/bgbgedit"
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableEnd="@drawable/ic_baseline_supervised_user_circle_24"
+                android:drawableRight="@drawable/ic_baseline_supervised_user_circle_24"
+                android:textColor="@color/lstextcolorinv"
+                android:textColorHint="@color/lstextcolorinv"
+                android:singleLine="true"
+                android:fontFamily="@font/lato"
+                android:padding="20dp"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/lstextcolorinv"
+            android:textColorHint="@color/lstextcolorinv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@drawable/bgbgedit"
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableEnd="@drawable/ic_baseline_security_24"
+                android:drawableRight="@drawable/ic_baseline_security_24"
+                android:textColor="@color/lstextcolorinv"
+                android:textColorHint="@color/lstextcolorinv"
+                android:singleLine="true"
+                android:fontFamily="@font/lato"
+                android:padding="20dp"
+                tools:targetApi="jelly_bean" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+
+        <Button
+            android:id="@+id/buttonSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/start_button"
+            android:text="signup"
+            android:textColor="#fff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginText" />
+
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:text="Already have account? Login"
+            android:textColor="#ffffff"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:targetApi="jelly_bean" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/profileImagephp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/buisness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="16dp"
+        android:text="Choose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Upload"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="4dp" />
+    </RelativeLayout>
+</ScrollView>

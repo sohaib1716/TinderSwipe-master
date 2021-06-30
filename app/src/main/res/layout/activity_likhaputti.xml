@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cons"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backact"
+    tools:context="com.papanews.ak.likhaputti">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/aboutus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/th1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:text="PAPANEWS"
+                    android:textSize="25dp"
+                    android:textColor="@color/lstextcolor"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="1dp"
+                    android:layout_below="@+id/th1"
+                    android:text="Aboutus"
+                    android:textSize="13dp"
+                    android:textColor="@color/lstextcolor"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:layout_below="@+id/th1"
+                    android:text="@string/adusc"
+                    android:textSize="18dp"
+                    android:textColor="@color/lstextcolor"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/tandc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/tac1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:text="PAPANEWS"
+                        android:textSize="25dp"
+                        android:textColor="@color/lstextcolor"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="1dp"
+                        android:layout_below="@+id/tac1"
+                        android:text="Terms and condition"
+                        android:textSize="13dp"
+                        android:textColor="@color/lstextcolor"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="25dp"
+                        android:layout_below="@+id/tac1"
+                        android:text="@string/dummy_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/lstextcolor"/>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/noin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:src="@drawable/loading"/>
+                    <TextView
+                        android:id="@+id/noit1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/loading"
+                        android:text="No Internet Connection"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/lstextcolor"/>
+                    <TextView
+                        android:id="@+id/noit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/noit1"
+                        android:text="Your Connection appears to be offline"
+                        android:textSize="18dp"
+                        android:textColor="@color/lstextcolor"/>
+                    <TextView
+                        android:id="@+id/noit3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_below="@+id/noit2"
+                        android:text="Try to refresh the page"
+                        android:textSize="18dp"
+                        android:textColor="@color/lstextcolor"/>
+
+                    <Button
+                        android:id="@+id/noireferesh"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/buttonstyle"
+                        android:text="Retry"
+                        android:layout_below="@+id/noit3"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/white"/>
+
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/langu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+                    <ImageView
+                        android:id="@+id/languimg"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:src="@drawable/multilang"/>
+                    <TextView
+                        android:id="@+id/langut1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/languimg"
+                        android:text="Select Your Language"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/lstextcolor"/>
+                    <TextView
+                        android:id="@+id/langut2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/langut1"
+                        android:text="Help us to customize your app"
+                        android:textSize="18dp"
+                        android:textColor="@color/lstextcolor"/>
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/langut3"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:textAlignment="center"-->
+                    <!--                        android:layout_below="@+id/langut2"-->
+                    <!--                        android:text="Try to refresh the page"-->
+                    <!--                        android:textSize="18dp"-->
+                    <!--                        android:textColor="@color/lstextcolor"/>-->
+                    <LinearLayout
+                        android:id="@+id/langul3"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:layout_below="@+id/langut2">
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/langub1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="6dp"
+
+                            android:clickable="true"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="6dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                >
+
+                                <!--                            <ImageView-->
+                                <!--                                android:id="@+id/i1"-->
+                                <!--                                android:layout_width="50dp"-->
+                                <!--                                android:layout_height="50dp"-->
+                                <!--                                android:layout_centerVertical="true"-->
+                                <!--                                android:layout_marginLeft="10dp"-->
+                                <!--                                android:src="@drawable/handshake" />-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="25dp"
+                                    android:layout_centerInParent="true"
+                                    android:text="English"
+                                    android:textColor="@color/lstextcolor"
+                                    android:textSize="18dp"
+                                    android:fontFamily="@font/lato"/>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/langub2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="6dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="6dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                >
+
+                                <!--                            <ImageView-->
+                                <!--                                android:id="@+id/i2"-->
+                                <!--                                android:layout_width="50dp"-->
+                                <!--                                android:layout_height="50dp"-->
+                                <!--                                android:layout_centerVertical="true"-->
+                                <!--                                android:layout_marginLeft="10dp"-->
+                                <!--                                android:src="@drawable/startup" />-->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="25dp"
+                                    android:layout_centerInParent="true"
+                                    android:text="Hindi"
+                                    android:textColor="@color/lstextcolor"
+                                    android:textSize="18dp"
+                                    android:fontFamily="@font/lato"/>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/langureferesh"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/buttonstyle"
+                        android:text="Customize"
+                        android:layout_below="@+id/langul3"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/white"/>
+
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

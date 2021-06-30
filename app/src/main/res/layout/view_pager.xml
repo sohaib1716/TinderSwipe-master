@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="3dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/CardbgColor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradientbackground"
+        android:elevation="10dp"
+        >
+
+        <RelativeLayout
+            android:padding="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_papabg1"
+                android:id="@+id/imageimage"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:maxLines="4"
+                app:textAllCaps="true"
+                android:id="@+id/news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageimage"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/times_new_roman"
+                android:text="COVID-19 situation should be under control in 7-10 days in Delhi: Arvind Kejriwal"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:visibility="visible"
+                android:maxLines="5"
+                android:id="@+id/discription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/news_title"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/lato"
+                android:text="@string/temporary"
+                android:textColor="#EFEEEE"
+                android:textSize="12dp" />
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/converted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/item_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/item_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <RelativeLayout
+            android:layout_centerHorizontal="true"
+            android:background="#13181E"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/srcimage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/toi"/>
+            <TextView
+                android:id="@+id/srcName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/srcimage"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/lato"
+                android:text="Times of India"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/views"
+                android:text="20"
+                android:layout_toRightOf="@+id/srcName"
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Views"
+                android:layout_toRightOf="@+id/views"
+                android:layout_marginLeft="3dp"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:layout_toLeftOf="@+id/share_card"
+                android:layout_centerVertical="true"
+                android:id="@+id/save_card"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/bookwhite"
+                app:tint="#FFFFFF" />
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/share_card"
+                android:layout_width="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/share"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/longText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_black"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_forward_black_24dp" />
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_black"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_black"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_downward_black_24dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_black"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_upward_black_24dp" />
+
+            </FrameLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
