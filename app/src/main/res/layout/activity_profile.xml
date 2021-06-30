@@ -63,7 +63,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="60dp"
                         android:fontFamily="@font/lato"
-                        android:text="Categories"
+                        android:text="Categorie"
                         android:textColor="#ffffff"
                         android:textSize="20dp"
 
