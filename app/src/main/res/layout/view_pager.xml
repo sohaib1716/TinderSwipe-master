@@ -44,7 +44,7 @@
 
             <TextView
                 android:visibility="visible"
-                android:maxLines="5"
+                android:maxLines="4"
                 android:id="@+id/discription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

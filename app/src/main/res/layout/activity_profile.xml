@@ -70,7 +70,6 @@
                         />
 
                     <ImageView
-                        android:id="@+id/iccat"
                         android:layout_width="40dp"
                         android:layout_height="45dp"
                         android:src="@drawable/ic_categories_01"
@@ -106,7 +105,6 @@
                         />
 
                     <ImageView
-                        android:id="@+id/iclang"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:src="@drawable/ic_language_01"
@@ -141,7 +139,6 @@
                         />
 
                     <ImageView
-                        android:id="@+id/icsave"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:src="@drawable/ic_saved_articles"
@@ -177,7 +174,6 @@
                         />
 
                     <ImageView
-                        android:id="@+id/icnoti"
                         android:layout_width="50dp"
                         android:layout_height="45dp"
                         android:src="@drawable/ic_notificationss_01"
@@ -216,7 +212,6 @@
 
                     <ImageView
                         android:foregroundGravity="center"
-                        android:id="@+id/icabout"
                         android:layout_width="35dp"
                         android:layout_height="45dp"
                         android:src="@drawable/ic_about_us_01"
@@ -251,7 +246,6 @@
                         />
 
                     <ImageView
-                        android:id="@+id/icterms"
                         android:layout_width="40dp"
                         android:layout_height="35dp"
                         android:src="@drawable/ic_terms_and_conditions_01"
@@ -290,7 +284,6 @@
 
 
                     <ImageView
-                        android:id="@+id/iclogout"
                         android:layout_width="35dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_logout_01"

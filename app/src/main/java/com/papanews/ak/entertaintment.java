@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import com.papanews.R;
+import com.squareup.picasso.Picasso;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -44,6 +47,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +57,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.papanews.R.drawable.ic_baseline_pause_24;
+import static com.papanews.R.drawable.ic_baseline_play_arrow_24;
 
 public class entertaintment extends Fragment implements CardStackListener {
 
@@ -86,6 +92,13 @@ public class entertaintment extends Fragment implements CardStackListener {
     ImageView fl,sav,shr;
     SharedPreferences.Editor editor;
 
+    //Audio player media
+    private MediaPlayer mMediaPlayer;
+    Button stop, pause,forward;
+    ImageView play, playimage;
+    TextView title, subtitle;
+    int flag, flagflag=0;
+
 
 
     //    Dynamic product bringing activity here
@@ -106,6 +119,15 @@ public class entertaintment extends Fragment implements CardStackListener {
         news = view.findViewById(R.id.nonews);
         daten = view.findViewById(R.id.datenews);
 
+        //        Audio player media
+        play = view.findViewById(R.id.play);
+        pause = view.findViewById(R.id.pause);
+        playimage = view.findViewById(R.id.playimage);
+        title = view.findViewById(R.id.audioTitlle);
+        subtitle = view.findViewById(R.id.audioSub);
+        forward = view.findViewById(R.id.forward);
+        mMediaPlayer = new MediaPlayer();
+        title.setSelected(true);
 
 
         if(addList().isEmpty()){
@@ -224,6 +246,12 @@ public class entertaintment extends Fragment implements CardStackListener {
             // -------------------- last position reached, do something ---------------------
             rewind_view.setVisibility(View.VISIBLE);
             normal.setVisibility(View.VISIBLE);
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.pause();
+                flagflag = 0;
+                flag = 0;
+                play.setBackgroundResource(ic_baseline_play_arrow_24);
+            }
         }
     }
 
@@ -243,6 +271,7 @@ public class entertaintment extends Fragment implements CardStackListener {
 
 
         sh = 0;
+        flag = 0;
         sav = view.findViewById(R.id.save_card);
         shr = view.findViewById(R.id.share_card);
         share = view.findViewById(R.id.item_image);
@@ -255,17 +284,89 @@ public class entertaintment extends Fragment implements CardStackListener {
             Log.e("closer :: ", String.valueOf(product));
 
             daten.setText(product.getString("date"));
-//
-//            global.date = product.getString("date");
 
-//            daten.setText(global.date);
+            Picasso.get().load(product.getString("image")).placeholder(R.drawable.noimage)
+                    .resize(250, 250)
+                    .into(playimage);
 
-//            fl.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(getActivity(), "Follow Follow", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            title.setText(product.getString("title"));
+            subtitle.setText(product.getString("sourcename"));
+
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(product.getString("converted"));
+            mMediaPlayer.prepare();
+
+
+
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // TODO Auto-generated method stub
+                    //here you can stop your recording thread.
+                    cardStackView.swipe();
+                }
+            });
+
+            if(flagflag==1){
+                play.setBackgroundResource(ic_baseline_pause_24);
+                mMediaPlayer.start();
+            }else if(flagflag==0){
+                play.setBackgroundResource(ic_baseline_play_arrow_24);
+            }
+
+            forward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cardStackView.swipe();
+                }
+            });
+
+            play.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
+                @Override
+                public void onClick(View v) {
+                    Log.e("gfdsfsfs one :: ", String.valueOf(flag));
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.pause();
+                        flagflag = 0;
+//                        draw = getResources().getDrawable(ic_baseline_play_arrow_24);
+//                        play.setImageDrawable(draw);
+                        play.setBackgroundResource(ic_baseline_play_arrow_24);
+                    } else {
+                        flag = 1;
+                        flagflag = 1;
+//                        draw = getResources().getDrawable(ic_baseline_pause_24);
+                        play.setBackgroundResource(ic_baseline_pause_24);
+                        mMediaPlayer.start();
+                    }
+                }
+            });
+
+            pause.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
+                @Override
+                public void onClick(View v) {
+                    Log.e("gfdsfsfs :: ", String.valueOf(flag));
+                    if(flag==1){
+                        mMediaPlayer.reset();
+                        try {
+                            play.setBackgroundResource(ic_baseline_pause_24);
+                            mMediaPlayer.setDataSource(product.getString("converted"));
+                            mMediaPlayer.prepare();
+                            mMediaPlayer.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        flag=0;
+                        flagflag = 1;
+                    }
+                    else if (flag == 0) {
+                        cardStackView.rewind();
+                    }
+                }
+            });
 
             checkIfSaved(product.getString("image"),product.getString("title"),product.getString("longd")
                     ,product.getString("shortd"),product.getString("sourceimage"),
@@ -352,7 +453,7 @@ public class entertaintment extends Fragment implements CardStackListener {
             });
 
 
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 

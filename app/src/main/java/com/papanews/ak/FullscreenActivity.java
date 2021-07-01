@@ -341,7 +341,6 @@ public class FullscreenActivity extends AppCompatActivity {
         src_name2.setText(source_name);
 
         if(audio.equals("1")){
-
             try {
                 mMediaPlayer.setDataSource(converted);
                 mMediaPlayer.prepare();

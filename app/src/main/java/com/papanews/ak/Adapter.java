@@ -86,7 +86,6 @@ public class Adapter extends FragmentPagerAdapter{
         if(global.cat_set.contains("tech")){
 
         }
-
         return tabTitles[position];
 
     }

@@ -5,7 +5,7 @@
     android:id="@+id/logic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgbg"
+    android:background="@drawable/ic_papabg1"
     tools:context="com.papanews.ak.Login">
 
         <RelativeLayout

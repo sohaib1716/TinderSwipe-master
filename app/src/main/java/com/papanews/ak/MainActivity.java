@@ -319,8 +319,9 @@ public class MainActivity extends AppCompatActivity {
                                     //getting product object from json array
                                     JSONObject product = array.getJSONObject(i);
                                     //adding the product to product list
-
+                                    Log.e("languagefsfds one :: ", product.getString("language"));
                                     if (selectedlang.equals(product.getString("language"))) {
+                                        Log.e("languagefsfds two :: ",product.getString("language"));
                                         itemsreco.add(new ItemModel(
                                                 product.getString("title"),
                                                 product.getString("image"),

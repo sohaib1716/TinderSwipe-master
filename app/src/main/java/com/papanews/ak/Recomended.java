@@ -7,14 +7,17 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.papanews.R;
+import com.squareup.picasso.Picasso;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -45,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +59,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.papanews.R.drawable.ic_baseline_pause_24;
+import static com.papanews.R.drawable.ic_baseline_play_arrow_24;
 
 public class Recomended extends Fragment implements CardStackListener {
 
@@ -65,9 +72,9 @@ public class Recomended extends Fragment implements CardStackListener {
     LinearLayout submit_report;
     ImageView rewind_view;
     CardStackView cardStackView;
-    ImageView imageView,share;
+    ImageView imageView, share;
     Drawable drawable;
-    Drawable drawable2;
+    Drawable drawable2, draw;
     List<ItemModel> productFromShared = new ArrayList<>();
     String jsonPreferences;
     SharedPreferences sharedpreferences;
@@ -78,11 +85,19 @@ public class Recomended extends Fragment implements CardStackListener {
     int sh;
     JSONObject product;
     String hashMapString;
-    ImageView fl,sav,shr;
+    ImageView fl, sav, shr;
     SharedPreferences.Editor editor;
     private Context mCtx;
     TextView news;
     TextView daten;
+
+    //Audio player media
+    private MediaPlayer mMediaPlayer;
+    Button stop, pause,forward;
+    ImageView play, playimage;
+    TextView title, subtitle;
+    int flag, flagflag=0;
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
@@ -97,16 +112,27 @@ public class Recomended extends Fragment implements CardStackListener {
         daten = view.findViewById(R.id.datenews);
 
 
-        if(addListReco().isEmpty()){
+//        Audio player media
+        play = view.findViewById(R.id.play);
+        pause = view.findViewById(R.id.pause);
+        playimage = view.findViewById(R.id.playimage);
+        title = view.findViewById(R.id.audioTitlle);
+        subtitle = view.findViewById(R.id.audioSub);
+        forward = view.findViewById(R.id.forward);
+        mMediaPlayer = new MediaPlayer();
+        title.setSelected(true);
+
+
+        if (addListReco().isEmpty()) {
             news.setVisibility(View.VISIBLE);
-        }else if(!addListReco().isEmpty()){
+        } else if (!addListReco().isEmpty()) {
             news.setVisibility(View.GONE);
         }
 
 
 //        textView.setText("Recomended");
         imageView = view.findViewById(R.id.doodle);
-        drawable  = getResources().getDrawable(R.drawable.technologybgbg);
+        drawable = getResources().getDrawable(R.drawable.bgreco);
         imageView.setImageDrawable(drawable);
         manager = new CardStackLayoutManager(getContext(), this);
         adapter = new CardStackAdapter(addListReco(), getContext());
@@ -121,7 +147,7 @@ public class Recomended extends Fragment implements CardStackListener {
         manager.setSwipeThreshold(0.3f);
         manager.setMaxDegree(20.0f);
         manager.setCanScrollHorizontal(false);
-        manager.setSwipeableMethod(SwipeableMethod.Manual);
+        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
 
 //        submit_report.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -154,13 +180,13 @@ public class Recomended extends Fragment implements CardStackListener {
                 manager.setSwipeThreshold(0.3f);
                 manager.setMaxDegree(20.0f);
                 manager.setCanScrollHorizontal(false);
-                manager.setSwipeableMethod(SwipeableMethod.Manual);
-                cardStackView.rewind();
+                manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
                 cardStackView = view.findViewById(R.id.card_stack_view);
                 cardStackView.setLayoutManager(manager);
                 cardStackView.setAdapter(adapter);
                 rewind_view.setVisibility(View.GONE);
                 normal.setVisibility(View.GONE);
+                cardStackView.rewind();
 
 
             }
@@ -170,7 +196,7 @@ public class Recomended extends Fragment implements CardStackListener {
 
     }
 
-    private void setDataFromSharedPreferences(List<String> save, String datatype){
+    private void setDataFromSharedPreferences(List<String> save, String datatype) {
         SharedPreferences sharedPref = getContext().getSharedPreferences("savePosts", MODE_PRIVATE);
         editor = sharedPref.edit();
         Set<String> set = new HashSet<String>();
@@ -181,21 +207,19 @@ public class Recomended extends Fragment implements CardStackListener {
     }
 
 
-
-
     @SuppressLint("LongLogTag")
-    private List<ItemModel> addListReco(){
+    private List<ItemModel> addListReco() {
         Gson gson = new Gson();
         SharedPreferences sharedPref = getContext().getSharedPreferences("urlData", MODE_PRIVATE);
         jsonPreferences = sharedPref.getString("recomended", "");
         Log.e("qewqeqwe :: ", String.valueOf(jsonPreferences));
-        Type type = new TypeToken<List<ItemModel>>() {}.getType();
+        Type type = new TypeToken<List<ItemModel>>() {
+        }.getType();
         productFromShared = gson.fromJson(jsonPreferences, type);
         Log.e("afasagsd :: ", String.valueOf(productFromShared));
 
         return productFromShared;
     }
-
 
 
     @Override
@@ -211,6 +235,12 @@ public class Recomended extends Fragment implements CardStackListener {
             // -------------------- last position reached, do something ---------------------
             rewind_view.setVisibility(View.VISIBLE);
             normal.setVisibility(View.VISIBLE);
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.pause();
+                flagflag = 0;
+                flag = 0;
+                play.setBackgroundResource(ic_baseline_play_arrow_24);
+            }
         }
     }
 
@@ -228,6 +258,7 @@ public class Recomended extends Fragment implements CardStackListener {
     public void onCardAppeared(final View view, final int position) {
 
         sh = 0;
+        flag = 0;
         sav = view.findViewById(R.id.save_card);
         shr = view.findViewById(R.id.share_card);
         share = view.findViewById(R.id.item_image);
@@ -237,20 +268,106 @@ public class Recomended extends Fragment implements CardStackListener {
         try {
             array = new JSONArray(jsonPreferences);
             product = array.getJSONObject(position);
-            Log.e("buhuhuhu :: ", String.valueOf(product));
-
+//            Log.e("buhuhuhu :: ", String.valueOf(product));
             daten.setText(product.getString("date"));
 
-            checkIfSaved(product.getString("image"),product.getString("title"),product.getString("longd")
-                    ,product.getString("shortd"),product.getString("sourceimage"),
-                    product.getString("sourcename"),product.getString("Views"),
-                    product.getString("LongText"),product.getString("audioType"),product.getString("video"));
+            Log.e("buhuhuhu :: ", product.getString("converted"));
+
+
+            Picasso.get().load(product.getString("image")).placeholder(R.drawable.noimage)
+                    .resize(250, 250)
+                    .into(playimage);
+
+            title.setText(product.getString("title"));
+            subtitle.setText(product.getString("sourcename"));
+
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(product.getString("converted"));
+            mMediaPlayer.prepare();
+
+
+
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // TODO Auto-generated method stub
+                    //here you can stop your recording thread.
+                    cardStackView.swipe();
+                }
+            });
+
+            if(flagflag==1){
+                play.setBackgroundResource(ic_baseline_pause_24);
+                mMediaPlayer.start();
+            }else if(flagflag==0){
+                play.setBackgroundResource(ic_baseline_play_arrow_24);
+            }
+
+            forward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cardStackView.swipe();
+                }
+            });
+
+            play.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
+                @Override
+                public void onClick(View v) {
+                    Log.e("gfdsfsfs one :: ", String.valueOf(flag));
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.pause();
+                        flagflag = 0;
+//                        draw = getResources().getDrawable(ic_baseline_play_arrow_24);
+//                        play.setImageDrawable(draw);
+                        play.setBackgroundResource(ic_baseline_play_arrow_24);
+                    } else {
+                        flag = 1;
+                        flagflag = 1;
+//                        draw = getResources().getDrawable(ic_baseline_pause_24);
+                        play.setBackgroundResource(ic_baseline_pause_24);
+                        mMediaPlayer.start();
+                    }
+                }
+            });
+
+            pause.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
+                @Override
+                public void onClick(View v) {
+                    Log.e("gfdsfsfs :: ", String.valueOf(flag));
+                    if(flag==1){
+                        mMediaPlayer.reset();
+                        try {
+                            play.setBackgroundResource(ic_baseline_pause_24);
+                            mMediaPlayer.setDataSource(product.getString("converted"));
+                            mMediaPlayer.prepare();
+                            mMediaPlayer.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        flag=0;
+                        flagflag = 1;
+                    }
+                    else if (flag == 0) {
+                        cardStackView.rewind();
+                    }
+                }
+            });
+
+
+            checkIfSaved(product.getString("image"), product.getString("title"), product.getString("longd")
+                    , product.getString("shortd"), product.getString("sourceimage"),
+                    product.getString("sourcename"), product.getString("Views"),
+                    product.getString("LongText"), product.getString("audioType"), product.getString("video"));
 
 
             sav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Map<String,String> myMap1 = new HashMap<String, String>();
+                    Map<String, String> myMap1 = new HashMap<String, String>();
                     try {
                         myMap1.put("image", product.getString("image"));
                         myMap1.put("title", product.getString("title"));
@@ -264,7 +381,7 @@ public class Recomended extends Fragment implements CardStackListener {
                         myMap1.put("audio", product.getString("audioType"));
                         Log.e("check CHECK :: ", String.valueOf(hashMapString));
 
-                        if(global.myMap.contains(myMap1)){
+                        if (global.myMap.contains(myMap1)) {
                             drawable2 = getResources().getDrawable(R.drawable.bookwhite);
                             sav.setImageDrawable(drawable2);
                             Toast.makeText(getActivity(), "Remove saved", Toast.LENGTH_SHORT).show();
@@ -278,7 +395,7 @@ public class Recomended extends Fragment implements CardStackListener {
                             prefs.edit().putString("savedData", hashMapString).apply();
                             prefs.edit().putInt("bookmark", sh).apply();
                             Log.e("storing data :: ", String.valueOf(hashMapString));
-                        }else{
+                        } else {
                             sh = 2;
                             drawable2 = getResources().getDrawable(R.drawable.bookmark);
                             sav.setImageDrawable(drawable2);
@@ -306,7 +423,7 @@ public class Recomended extends Fragment implements CardStackListener {
                 public void onClick(View v) {
                     Toast.makeText(getActivity(), "Share Share", Toast.LENGTH_SHORT).show();
 
-                    BitmapDrawable drawable = (BitmapDrawable)share.getDrawable();
+                    BitmapDrawable drawable = (BitmapDrawable) share.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
 
                     String bitmapPath = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "title", null);
@@ -316,7 +433,7 @@ public class Recomended extends Fragment implements CardStackListener {
                     intent.setType("image/jpg");
                     intent.putExtra(Intent.EXTRA_STREAM, uri);
                     try {
-                        intent.putExtra(Intent.EXTRA_TEXT,product.getString("title"));
+                        intent.putExtra(Intent.EXTRA_TEXT, product.getString("title"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -325,7 +442,7 @@ public class Recomended extends Fragment implements CardStackListener {
             });
 
 
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
@@ -349,10 +466,11 @@ public class Recomended extends Fragment implements CardStackListener {
                     editor.putString("audio", product.getString("audioType"));
                     editor.putString("converted", product.getString("converted"));
 
+
                     share_Tilte = product.getString("title");
                     view_update = Integer.parseInt(product.getString("Views")) + 1;
                     editor.putString("srcViews", String.valueOf(view_update));
-                    addDataToDatabase(String.valueOf(view_update),product.getString("image"));
+                    addDataToDatabase(String.valueOf(view_update), product.getString("image"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -371,8 +489,21 @@ public class Recomended extends Fragment implements CardStackListener {
         });
 
     }
-    private void checkIfSaved(String image, String title,String id, String shdiscprition, String source_image, String source_name,
-                              String source_views, String long_disc,String audio,String videoOfYOUTUBE){
+
+
+    private void playAudio(String datatoplay) {
+        try {
+            mMediaPlayer.setDataSource(datatoplay);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void checkIfSaved(String image, String title, String id, String shdiscprition, String source_image, String source_name,
+                              String source_views, String long_disc, String audio, String videoOfYOUTUBE) {
         Map<String, String> myMap1 = new HashMap<String, String>();
         myMap1.put("image", image);
         myMap1.put("title", title);
@@ -388,11 +519,11 @@ public class Recomended extends Fragment implements CardStackListener {
         Log.e("checking global :: ", String.valueOf(global.myMap));
 
 
-        if(global.myMap.contains(myMap1)){
+        if (global.myMap.contains(myMap1)) {
             Log.e("cgecking checking :: ", "Yess done done");
             drawable2 = getResources().getDrawable(R.drawable.bookmark);
             sav.setImageDrawable(drawable2);
-       }else{
+        } else {
             drawable2 = getResources().getDrawable(R.drawable.bookwhite);
             sav.setImageDrawable(drawable2);
         }
@@ -400,12 +531,11 @@ public class Recomended extends Fragment implements CardStackListener {
     }
 
 
-
     private void addDataToDatabase(final String Views, final String imageId) {
 
         String[] urls = {"http://papanews.in/PapaNews/updateViews.php",
-                "http://papanews.in/PapaNews/updateTech.php","http://papanews.in/PapaNews/updateViews/viewsStartup.php",
-                "http://papanews.in/PapaNews/updateViews/viewsSports.php","http://papanews.in/PapaNews/updateViews/viewsEntertain.php",
+                "http://papanews.in/PapaNews/updateTech.php", "http://papanews.in/PapaNews/updateViews/viewsStartup.php",
+                "http://papanews.in/PapaNews/updateViews/viewsSports.php", "http://papanews.in/PapaNews/updateViews/viewsEntertain.php",
                 "http://papanews.in/PapaNews/updateViews/viewsBusiness.php"
         };
 
@@ -413,7 +543,7 @@ public class Recomended extends Fragment implements CardStackListener {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
 
-        for(int i =0;i<urls.length;i++){
+        for (int i = 0; i < urls.length; i++) {
 
             StringRequest request = new StringRequest(Request.Method.POST,
                     urls[i], new com.android.volley.Response.Listener<String>() {
