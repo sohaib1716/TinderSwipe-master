@@ -8,67 +8,70 @@
     android:background="@drawable/ic_papabg1"
     tools:context="com.papanews.ak.Login">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/logimg"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/papcircle" />
+
+        <TextView
+            android:id="@+id/tt"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logimg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/times_new_roman"
+            android:gravity="center"
+            android:text="Papa News"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_marginTop="60dp"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/logimg"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/papcircle"
-                />
-            
-            <TextView
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/tt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/logimg"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/times_new_roman"
-                android:text="Papa News"
-                android:textColor="#ffffff"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tt"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/times_new_roman"
-                android:text="Login"
-                android:textColor="#ffffff"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/times_new_roman"
+            android:text="Login"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"
             android:id="@+id/textInputLayoutUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Username"
-            android:layout_below="@+id/textView">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:background="@drawable/bgbgedit"
                 android:id="@+id/username"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bgbgedit"
                 android:drawableEnd="@drawable/ic_baseline_supervised_user_circle_24"
                 android:drawableRight="@drawable/ic_baseline_supervised_user_circle_24"
                 android:drawableTint="@color/lstextcolorinv"
                 android:fontFamily="@font/lato"
-                android:padding="20dp"
+                android:hint="Username"
+                android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@color/lstextcolorinv"
                 tools:targetApi="jelly_bean" />
@@ -79,21 +82,25 @@
             android:id="@+id/textInputLayoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/textInputLayoutUsername"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Password"
-            android:layout_below="@+id/textInputLayoutUsername">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:background="@drawable/bgbgedit"
+                android:visibility="gone"
+                android:inputType="textPassword"
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bgbgedit"
                 android:drawableEnd="@drawable/ic_baseline_security_24"
                 android:drawableRight="@drawable/ic_baseline_security_24"
                 android:drawableTint="@color/lstextcolorinv"
                 android:fontFamily="@font/lato"
-                android:padding="19dp"
+                android:hint="Password"
+                android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@color/lstextcolorinv"
                 tools:targetApi="jelly_bean" />
@@ -101,111 +108,141 @@
 
 
         <TextView
+            android:visibility="gone"
+            android:fontFamily="@font/lato"
             android:id="@+id/lg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Or login with.."
+            android:layout_below="@+id/buttonLogin"
+            android:layout_marginTop="20dp"
+            android:text="Or"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="15dp"
-            android:layout_below="@+id/textInputLayoutPassword" />
+            android:textSize="15dp" />
 
-            <View
-                android:id="@+id/v1"
-                android:layout_below="@+id/lg"
-                android:layout_centerHorizontal="true"
-                android:layout_width="0dp"
-                android:layout_height="10dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_below="@+id/lg"
+            android:layout_centerHorizontal="true" />
 
-            <RelativeLayout
-                android:id="@+id/googlelogin"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:layout_toLeftOf="@+id/v1"
-                android:layout_marginRight="25dp"
-                android:layout_below="@+id/lg"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundwhite">
+        <RelativeLayout
+            android:id="@+id/googlelogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/lg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="#FD0808"
+            android:background="@drawable/roundwhite">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/google"
-                    android:layout_centerInParent="true"/>
-
-            </RelativeLayout>
-
-
-            <com.facebook.login.widget.LoginButton
+            <ImageView
                 android:visibility="gone"
-                android:id="@+id/facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="118dp"
-                android:layout_marginTop="24dp"
-                android:text="Facebook signIn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <RelativeLayout
-                android:id="@+id/facebooklogin"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:layout_toRightOf="@+id/v1"
-                android:layout_below="@+id/lg"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="25dp"
-                android:background="@drawable/roundwhite"
-                >
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/facebook"
-                    android:layout_centerInParent="true"/>
-
-
-            </RelativeLayout>
-
-
-
-            <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
-
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/start_button"
-        android:text="login"
-        android:textColor="#fff"
-        android:layout_alignParentBottom="true"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/google" />
 
             <TextView
-                android:id="@+id/signUpText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/buttonLogin"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lato"
-                android:text="Don't have account? Sign up."
-                android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:layout_centerHorizontal="true"
+                android:textSize="20dp"
+                android:text="Login with google"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
         </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/facebooklogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/googlelogin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#0763AC"
+            android:background="@drawable/roundwhite">
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/facebook" />
+
+            <TextView
+                android:fontFamily="@font/lato"
+                android:textColor="#ffffff"
+                android:layout_centerHorizontal="true"
+                android:textSize="20dp"
+                android:text="Login with Facebook"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </RelativeLayout>
+
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="24dp"
+            android:text="Facebook signIn"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+
+        <Button
+            android:visibility="gone"
+            android:fontFamily="@font/lato"
+            android:layout_below="@+id/signUpText"
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/start_button"
+            android:text="login"
+            android:textColor="#fff" />
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:id="@+id/signUpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInputLayoutPassword"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:text="Don't have account? Sign up."
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

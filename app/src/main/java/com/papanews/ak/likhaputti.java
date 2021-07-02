@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -26,6 +27,8 @@ public class likhaputti extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String selectedlang;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +39,27 @@ public class likhaputti extends AppCompatActivity {
         cons = findViewById(R.id.cons);
         noir = findViewById(R.id.noireferesh);
         langu = findViewById(R.id.langu);
-        langub1 = findViewById(R.id.langub1);
-        langub2 = findViewById(R.id.langub2);
+        langub1 = (CardView) findViewById(R.id.langub1);
+        langub2 = (CardView) findViewById(R.id.langub2);
         langureferesh = findViewById(R.id.langureferesh);
 
         sharedPreferences = getSharedPreferences("autoLogin", Context.MODE_PRIVATE);
         selectedlang = sharedPreferences.getString("selectedlang","English");
+        editor = sharedPreferences.edit();
 
         int Eng = sharedPreferences.getInt("English", 0);
 
         if(Eng==0 ){
+            langub1.setCardBackgroundColor(Color.parseColor("#F4931D"));
+            langub2.setCardBackgroundColor(Color.parseColor("#454545"));
+        }
+        langub1.setCardBackgroundColor(Color.parseColor("#F4931D"));
+
+        if(selectedlang.equals("Hindi")){
+            langub2.setCardBackgroundColor(Color.parseColor("#F4931D"));
+            langub1.setCardBackgroundColor(Color.parseColor("#454545"));
+        }
+        if(selectedlang.equals("English")){
             langub1.setCardBackgroundColor(Color.parseColor("#F4931D"));
             langub2.setCardBackgroundColor(Color.parseColor("#454545"));
         }
@@ -92,9 +106,7 @@ public class likhaputti extends AppCompatActivity {
                     Intent intent = new Intent(likhaputti.this, Login.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.nothing, R.anim.slide_out_left);
-
                     finish();
-
                 }
             }
         });

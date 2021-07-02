@@ -90,6 +90,8 @@ public class select_category extends AppCompatActivity {
         influence_int = prefs.getInt("influence", 0);
         miscelen_int = prefs.getInt("miss", 0);
 
+        global.cat_set.add(0, "Profile");
+
 
 
 

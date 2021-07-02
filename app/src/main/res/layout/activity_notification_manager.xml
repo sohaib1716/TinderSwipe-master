@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backact"
+    android:id="@+id/relat"
+    android:background="@drawable/ic_papabg1"
     tools:context="com.papanews.ak.activity_notification">
 
     <ScrollView
@@ -19,23 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <pl.droidsonroids.gif.GifImageView
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:src="@drawable/notification"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notification"
+                android:layout_marginLeft="30dp"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_marginBottom="10dp"
+                />
 
 
             <RadioGroup
+                android:background="@drawable/notificationbg"
                 android:layout_gravity="center"
                 android:id="@+id/rg5"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <RadioButton
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="40dp"
                     android:padding="5dp"
-                    android:buttonTint="#E30F0F"
+                    android:buttonTint="#3180BF"
                     android:fontFamily="@font/lato"
                     android:textColor="@color/white"
                     android:id="@+id/regular"
@@ -43,18 +54,29 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#3F51B5"
                     android:checked="true"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:onClick="onRadioButtonClicked"
                     android:text="Regualr Notification"
                     tools:ignore="OnClick" />
 
+
+                <View
+                    android:backgroundTint="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/delivery_address"
+                    android:layout_centerVertical="true"
+                    android:background="#cfcfcf" />
+
                 <RadioButton
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="40dp"
                     android:padding="5dp"
-                    android:buttonTint="#E30F0F"
+                    android:buttonTint="#3180BF"
                     android:fontFamily="@font/lato"
                     android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:layout_marginTop="30dp"
+                    android:textSize="20dp"
                     android:id="@+id/nonoti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -63,13 +85,24 @@
                     android:text="No Notification"
                     tools:ignore="OnClick" />
 
+
+                <View
+                    android:backgroundTint="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/delivery_address"
+                    android:layout_centerVertical="true"
+                    android:background="#ffffff" />
+
                 <RadioButton
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="40dp"
                     android:padding="5dp"
-                    android:buttonTint="#E30F0F"
+                    android:buttonTint="#3180BF"
                     android:fontFamily="@font/lato"
                     android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:layout_marginTop="30dp"
+                    android:textSize="20dp"
                     android:id="@+id/not"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,18 +114,31 @@
 
             </RadioGroup>
 
+
+
             <TextView
+                android:gravity="center"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/white"
                 android:id="@+id/fal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:layout_below="@+id/rg5"
                 android:visibility="gone"
                 android:text="*You will get notification daily at 8:00 PM*"
-                android:layout_centerHorizontal="true"
                 />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/bell"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/notify"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+
 
             <LinearLayout
                 android:layout_marginBottom="40dp"
@@ -103,10 +149,15 @@
                 android:layout_height="match_parent">
 
                 <TimePicker
+                    android:theme="@style/Theme.picker"
+                    android:backgroundTint="@color/white"
+                    android:numbersBackgroundColor="@color/white"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:timePickerMode="spinner"
                     android:id="@+id/timePicker1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="20dp" />
 
                 <TextView
                     android:fontFamily="@font/lato"

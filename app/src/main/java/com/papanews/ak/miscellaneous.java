@@ -159,7 +159,7 @@ public class miscellaneous extends Fragment implements CardStackListener {
         manager.setSwipeThreshold(0.3f);
         manager.setMaxDegree(20.0f);
         manager.setCanScrollHorizontal(false);
-        manager.setSwipeableMethod(SwipeableMethod.Manual);
+        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
 
 
 
@@ -199,7 +199,7 @@ public class miscellaneous extends Fragment implements CardStackListener {
                 manager.setSwipeThreshold(0.3f);
                 manager.setMaxDegree(20.0f);
                 manager.setCanScrollHorizontal(false);
-                manager.setSwipeableMethod(SwipeableMethod.Manual);
+                manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
                 cardStackView.rewind();
                 rewind_view.setVisibility(View.GONE);
                 normal.setVisibility(View.GONE);

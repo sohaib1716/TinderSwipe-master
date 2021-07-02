@@ -20,6 +20,13 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.api.GoogleAPI;
+import com.google.api.GoogleAPIException;
+import com.google.api.translate.Language;
+import com.google.api.translate.Translate;
+import com.google.api.translate.TranslateV1;
+import com.google.api.translate.TranslateV2;
+import com.mannan.translateapi.TranslateAPI;
 import com.papanews.R;
 import com.squareup.picasso.Picasso;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -33,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-
+import static com.facebook.FacebookSdk.getAutoLogAppEventsEnabled;
 
 public class Profile extends Fragment implements CardStackListener {
 
@@ -49,6 +56,7 @@ public class Profile extends Fragment implements CardStackListener {
     TextView logout;
     SharedPreferences.Editor editor;
 
+    @SuppressLint({"SetTextI18n", "CutPasteId"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +74,9 @@ public class Profile extends Fragment implements CardStackListener {
         final String image_fb = sharedPreferences.getString("image_fb", "");
         Log.e("Username Profile :: ", user);
         Log.e("google Profile :: ", google_image);
+        final String selectedlang = sharedPreferences.getString("selectedlang", "English");
+
+
 
         user_name = view.findViewById(R.id.finalUsername);
         imageView = view.findViewById(R.id.profile_image);
@@ -78,6 +89,122 @@ public class Profile extends Fragment implements CardStackListener {
         notification_send = view.findViewById(R.id.notification_Send);
 
 
+        try {
+            String translatedText = Translate.DEFAULT.execute("Some text", Language.ENGLISH, Language.FRENCH);
+            Log.e("sffdsdffds cat",translatedText);
+        } catch (GoogleAPIException e) {
+            e.printStackTrace();
+        }
+
+        final String categoryselection = global.convertHindi("Categories");
+        Log.e("sffdsdffds cat",categoryselection);
+
+        final String languageselection = global.convertHindi("Language");
+        Log.e("sffdsdffds lang",languageselection);
+
+        if(selectedlang.equals("Hindi")){
+            final TranslateAPI translateAPI = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Categories");
+            translateAPI.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    cat.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI1 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Language");
+            translateAPI1.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    lang.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI2 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Saved News");
+            translateAPI2.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    save_news.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI3 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Notification Manager");
+            translateAPI3.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    notification_send.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI4 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "About Us");
+            translateAPI4.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    about_us.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI5 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Terms and condition");
+            translateAPI5.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    terms.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            final TranslateAPI translateAPI6 = new TranslateAPI(com.mannan.translateapi.Language.AUTO_DETECT,
+                    com.mannan.translateapi.Language.HINDI, "Logout");
+            translateAPI6.setTranslateListener(new TranslateAPI.TranslateListener() {
+                @Override
+                public void onSuccess(String translatedText) {
+                    logout.setText(translatedText);
+                }
+                @Override
+                public void onFailure(String ErrorText) {
+//                Toast.makeText(, ErrorText, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }else{
+            Log.e("hellohello","hihih");
+            cat.setText("Categories");
+            lang.setText("Language");
+            save_news.setText("Saved News");
+            notification_send.setText("Notification Manager");
+            about_us.setText("About Us");
+            terms.setText("Terms and condition");
+            logout.setText("Logout");
+        }
+
         user_name.setText(user);
 
         if (!image_fb.equals("")) {
@@ -86,13 +213,11 @@ public class Profile extends Fragment implements CardStackListener {
                     .into(imageView);
         }
 
-
         if(!google_image.equals("")){
             Picasso.get().load(google_image).placeholder(R.drawable.pr)
                     .resize(350, 350)
                     .into(imageView);
         }
-
 
         about_us.setOnClickListener(new View.OnClickListener() {
             @Override

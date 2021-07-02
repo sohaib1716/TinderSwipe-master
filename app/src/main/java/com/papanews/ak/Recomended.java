@@ -285,8 +285,6 @@ public class Recomended extends Fragment implements CardStackListener {
             mMediaPlayer.setDataSource(product.getString("converted"));
             mMediaPlayer.prepare();
 
-
-
             mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {

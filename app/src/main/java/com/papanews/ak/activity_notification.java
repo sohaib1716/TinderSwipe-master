@@ -19,6 +19,9 @@ import com.papanews.R;
 
 import java.util.Calendar;
 
+import pl.droidsonroids.gif.GifDecoder;
+import pl.droidsonroids.gif.GifImageView;
+
 public class activity_notification extends AppCompatActivity {
 
     private TimePicker timePicker1;
@@ -35,19 +38,25 @@ public class activity_notification extends AppCompatActivity {
     String timeof,timeofnew;
     String showingtime;
 
+    GifImageView bell;
     RadioButton bt1,bt2;
+
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_manager);
+        relativeLayout = findViewById(R.id.relat);
         timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
+//        timePicker1.setIs24HourView(true);
         time = (TextView) findViewById(R.id.textView1);
         calendar = Calendar.getInstance();
-        check = findViewById(R.id.fal);
+        check = (TextView) findViewById(R.id.fal);
         show = findViewById(R.id.shownot);
         bt1 = findViewById(R.id.not);
         bt2 = findViewById(R.id.regular);
+        bell = (GifImageView) findViewById(R.id.bell);
 
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -100,49 +109,12 @@ public class activity_notification extends AppCompatActivity {
         time.setText(new StringBuilder().append(hour).append(":").append(min)
                 .append(" ").append(format));
 
-        if(format.equals("PM")){
-            if(hour==1){
-                hour=13;
-            }
-            if(hour==2){
-                hour=14;
-            }
-            if(hour==3){
-                hour=15;
-            }
-            if(hour==4){
-                hour=16;
-            }
-            if(hour==5){
-                hour=17;
-            }
-            if(hour==6){
-                hour=18;
-            }
-            if(hour==7){
-                hour=19;
-            }
-            if(hour==8){
-                hour=20;
-            }
-            if(hour==9){
-                hour=21;
-            }
-            if(hour==10){
-                hour=22;
-            }
-            if(hour==11){
-                hour=23;
-            }
-            if(hour==12){
-                hour=24;
-            }
-        }
-
         gettime = (new StringBuilder().append(hour).append(":").append(min)
                 .append(":").append(0));
 
-        Log.e("gettime :: ", String.valueOf(gettime));
+        Log.e("timeset noti :: ", String.valueOf(gettime));
+
+        global.timenotify = String.valueOf(gettime);
 
     }
 
@@ -156,7 +128,8 @@ public class activity_notification extends AppCompatActivity {
             case R.id.regular:
                 if (checked)
                     show.setVisibility(View.GONE);
-                    check.setVisibility(View.GONE);
+                    check.setVisibility(View.VISIBLE);
+                    bell.setVisibility(View.VISIBLE);
                     editor = sharedpreferences.edit();
                     editor.putInt("reguCustome", 0);
                     editor.apply();
@@ -165,6 +138,7 @@ public class activity_notification extends AppCompatActivity {
                 if (checked)
                     show.setVisibility(View.VISIBLE);
                     check.setVisibility(View.GONE);
+                    bell.setVisibility(View.GONE);
                     editor = sharedpreferences.edit();
                     editor.putString("realTime", String.valueOf(gettime));
                     editor.putString("showingTime", String.valueOf(showingtime));
@@ -175,6 +149,7 @@ public class activity_notification extends AppCompatActivity {
                 if (checked)
                     show.setVisibility(View.GONE);
                     check.setVisibility(View.GONE);
+                    bell.setVisibility(View.GONE);
                     editor = sharedpreferences.edit();
                     editor.putInt("reguCustome", 2);
                     editor.apply();
@@ -187,4 +162,28 @@ public class activity_notification extends AppCompatActivity {
         Intent intent = new Intent(activity_notification.this, MainActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        relativeLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        relativeLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+
 }

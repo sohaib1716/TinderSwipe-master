@@ -32,27 +32,6 @@ public class Adapter extends FragmentPagerAdapter{
             case 1:
                 return new Recomended();
             case 2:
-
-//                if(global.cat_set.contains("tech")){
-//                    return new Technology();
-//                }else if(global.cat_set.contains("politics")){
-//                    return new Politics();
-//                }else if(global.cat_set.contains("entertain")){
-//                    return new entertaintment();
-//                }else if(global.cat_set.contains("business")){
-//                    return new Business();
-//                }else if(global.cat_set.contains("startup")){
-//                    return new Startup();
-//                }else if(global.cat_set.contains("sports")){
-//                    return new sports();
-//                }else if(global.cat_set.contains("influence")){
-//                    return new influences();
-//                }else if(global.cat_set.contains("miscell")){
-//                    return new miscellaneous();
-//                }else if(global.cat_set.contains("international")){
-//                    return new international();
-//                }
-
                 return new Technology();
             case 3:
                 return new Politics();
@@ -81,11 +60,7 @@ public class Adapter extends FragmentPagerAdapter{
 
     public CharSequence getPageTitle(int position){
 
-        Log.e("adapterSet :: ", String.valueOf(global.cat_set));
 
-        if(global.cat_set.contains("tech")){
-
-        }
         return tabTitles[position];
 
     }

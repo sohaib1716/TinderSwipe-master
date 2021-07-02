@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,7 +58,7 @@ import java.util.Set;
 public class Login extends AppCompatActivity {
 
     ConstraintLayout constraintLayout;
-    TextInputEditText  textInputEditTextUsername, TextInputEditTextPassowrd;
+    TextInputEditText textInputEditTextUsername, TextInputEditTextPassowrd;
     Button buttonLogin;
     TextView textViewSignup;
     ProgressBar progressBar;
@@ -75,6 +77,8 @@ public class Login extends AppCompatActivity {
     LoginButton faceLogin;
 
     RelativeLayout log;
+    String first_name, last_name;
+    String facebookEmail;
 
 
     @Override
@@ -93,22 +97,21 @@ public class Login extends AppCompatActivity {
         }
 
         PrefManager prefManager = new PrefManager(getApplicationContext());
-        if(prefManager.isFirstTimeLaunch()){
+        if (prefManager.isFirstTimeLaunch()) {
             prefManager.setFirstTimeLaunch(false);
             startActivity(new Intent(Login.this, WelcomeActivity.class));
             finish();
         }
 
 
-        prefs=this.getSharedPreferences("yourPrefsKey", Context.MODE_PRIVATE);
+        prefs = this.getSharedPreferences("yourPrefsKey", Context.MODE_PRIVATE);
         edit = prefs.edit();
-        set  =  prefs.getStringSet("recomended", null);
+        set = prefs.getStringSet("recomended", null);
 
         Log.e("selected set :: ", String.valueOf(set));
         loginGoogle = findViewById(R.id.googlelogin);
         faceLogin = findViewById(R.id.facebook);
         log = findViewById(R.id.facebooklogin);
-
 
 
         textInputEditTextUsername = findViewById(R.id.username);
@@ -117,21 +120,7 @@ public class Login extends AppCompatActivity {
         textViewSignup = findViewById(R.id.signUpText);
         progressBar = findViewById(R.id.progress);
         constraintLayout = findViewById(R.id.logic);
-        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
 
-                Rect rect = new Rect();
-                getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-                int screenHeight = getWindow().getDecorView().getRootView().getHeight();
-
-                int keyboardHeight = screenHeight - rect.bottom;
-
-                if (keyboardHeight > screenHeight * 0.15) {
-                    hideSystemUI();
-                }
-            }
-        });
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +132,7 @@ public class Login extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences("autoLogin", Context.MODE_PRIVATE);
         final int j = sharedpreferences.getInt("key", 0);
-        Log.i("what is in",String.valueOf(j));
+        Log.i("what is in", String.valueOf(j));
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -163,10 +152,10 @@ public class Login extends AppCompatActivity {
         });
 
 
-
         textViewSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                global.logincheck = 0;
                 Intent i = new Intent(getApplicationContext(), SignUp.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.nothing);
@@ -194,12 +183,10 @@ public class Login extends AppCompatActivity {
                 boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
                 Log.d("API123", loggedIn + " ??");
                 getUserProfile(AccessToken.getCurrentAccessToken());
-                Intent intent = new Intent(getApplicationContext(), select_category.class);
-                startActivity(intent);
-                finish();
-//                info.setText("User ID: " + loginResult.getAccessToken().getUserId() +
-//                "\n" + "Auth Token: " + loginResult.getAccessToken().getToken());
+                global.logincheck = 2;
+
             }
+
             @Override
             public void onCancel() {
 
@@ -212,12 +199,11 @@ public class Login extends AppCompatActivity {
         });
 
 
-
-        if(j > 0){
-            Log.i("Loogged in","your in");
+        if (j > 0) {
+            Log.i("Loogged in", "your in");
             Intent activity = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(activity);
-        }else{
+        } else {
             buttonLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -251,19 +237,19 @@ public class Login extends AppCompatActivity {
                                         //End ProgressBar (Set visibility to GONE)
                                         Log.i("PutData", result);
 
-                                        if(result.equals("Login Success")){
+                                        if (result.equals("Login Success")) {
 
                                             //Default is 0 so autologin is disabled
                                             editor = sharedpreferences.edit();
                                             editor.putString("username", userName);
-                                            editor.putInt("checkcheck",1);
-                                            Log.e("Username :: ",userName);
+                                            editor.putInt("checkcheck", 1);
+                                            Log.e("Username :: ", userName);
                                             editor.apply();
 
-                                            Log.i("Not luck","your not in");
+                                            Log.i("Not luck", "your not in");
                                             SessionManager sessionManager = new SessionManager(getApplicationContext());
                                             sessionManager.setLogin(true);
-                                            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                                             Intent intent = new Intent(getApplicationContext(), select_category.class);
                                             startActivity(intent);
@@ -279,8 +265,8 @@ public class Login extends AppCompatActivity {
 //                                                finish();
 //                                            }
 
-                                        }else {
-                                            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                                         }
                                     }
                                 }
@@ -288,14 +274,51 @@ public class Login extends AppCompatActivity {
                             }
                         });
 
-                    }else{
+                    } else {
 
-                        Toast.makeText(getApplicationContext(),"All fields are required", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_LONG).show();
                     }
 
                 }
             });
         }
+    }
+
+    private void checkEmail(final String email){
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                StringRequest request = new StringRequest(Request.Method.POST,
+                        "http://papanews.in/PapaNews/emailExist.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        if(response.equals("exist")){
+                            startActivity(new Intent(Login.this, select_category.class));
+                        }else{
+                            startActivity(new Intent(Login.this, SignUp.class));
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("email", email);
+                        return map;
+                    }
+                };
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                queue.add(request);
+            }
+
+        }, 1000);
+
     }
 
 
@@ -306,31 +329,31 @@ public class Login extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.d("TAG", object.toString());
                         try {
-                            String first_name = object.getString("first_name");
-                            String last_name = object.getString("last_name");
-                            String email = object.getString("email");
+                            first_name = object.getString("first_name");
+                            last_name = object.getString("last_name");
+                            facebookEmail = object.getString("email");
                             String id = object.getString("id");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
 
-                            Log.e("facebook name :: ",first_name);
-                            Log.e("facebook last_name :: ",last_name);
-                            Log.e("facebook email :: ",email);
-                            Log.e("facebook id :: ",id);
-                            Log.e("facebook image_url :: ",image_url);
+                            Log.e("facebook name :: ", first_name);
+                            Log.e("facebook last_name :: ", last_name);
+                            Log.e("facebook email :: ", facebookEmail);
+                            Log.e("facebook id :: ", id);
+                            Log.e("facebook image_url :: ", image_url);
 
+                            checkEmail(facebookEmail);
 
                             editor = sharedpreferences.edit();
-                            editor.putInt("checkcheck",2);
-                            editor.putString("facebook_fullname", first_name+" "+last_name);
-                            editor.putString("facebook_username", email);
+                            editor.putInt("checkcheck", 2);
+                            editor.putString("facebook_fullname", first_name + " " + last_name);
+                            editor.putString("facebook_username", facebookEmail);
                             editor.putString("facebook_password", first_name);
-                            editor.putString("facebook_email", email);
+                            editor.putString("facebook_email", facebookEmail);
                             editor.putString("facebook_image", image_url);
                             editor.apply();
 
 
-
-                            addDataToDatabase(first_name+" "+last_name,email,first_name,email,image_url);
+//                            addDataToDatabase(first_name + " " + last_name, facebookEmail, first_name, facebookEmail, image_url);
 
 //                            txtUsername.setText("First Name: " + first_name + "\nLast Name: " + last_name);
 //                            txtEmail.setText(email);
@@ -352,7 +375,7 @@ public class Login extends AppCompatActivity {
 
     private void signIn() {
         editor = sharedpreferences.edit();
-        editor.putInt("checkcheck",3);
+        editor.putInt("checkcheck", 3);
         editor.apply();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -377,7 +400,12 @@ public class Login extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
-            startActivity(new Intent(Login.this, select_category.class));
+            String personName = account.getDisplayName();
+            String email = account.getEmail();
+            checkEmail(email);
+            global.logincheck = 1;
+
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -385,11 +413,12 @@ public class Login extends AppCompatActivity {
             Toast.makeText(Login.this, "Failed", Toast.LENGTH_LONG).show();
         }
     }
+
     protected void onStart() {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null) {
+        if (account != null) {
 //            startActivity(new Intent(Login.this, MainActivity.class));
             mGoogleSignInClient.signOut();
         }
@@ -398,34 +427,34 @@ public class Login extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        hideSystemUI();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        hideSystemUI();
-    }
-
-
-    private void hideSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_LOW_PROFILE |
-                        View.SYSTEM_UI_FLAG_IMMERSIVE
-        );
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        hideSystemUI();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        hideSystemUI();
+//    }
+//
+//
+//    private void hideSystemUI() {
+//        getWindow().getDecorView().setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+//                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+//                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+//                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+//                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+//                        View.SYSTEM_UI_FLAG_LOW_PROFILE |
+//                        View.SYSTEM_UI_FLAG_IMMERSIVE
+//        );
+//    }
 
 
     private void addDataToDatabase(final String fullname, final String username,
-                                   final String password,final String email,final String image) {
+                                   final String password, final String email, final String image) {
 
         String url = "http://papanews.in/PapaNews/googleSignIn.php";
 
@@ -437,10 +466,9 @@ public class Login extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);
 
-                if(response.equals("success")){
+                if (response.equals("success")) {
                     Toast.makeText(Login.this, "Upload " + response, Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(Login.this, "User Already registered", Toast.LENGTH_SHORT).show();
                 }
 

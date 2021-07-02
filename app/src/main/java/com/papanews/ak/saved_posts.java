@@ -57,7 +57,7 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
 //    List<String> srcImage = new ArrayList<String>();
 //    List<String> srcName = new ArrayList<String>();
 //    List<String> shrtDesc = new ArrayList<String>();
-//
+
 
     Gson gson = new Gson();
     String jsonPreferences;
@@ -85,6 +85,15 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
 
         SharedPreferences prefs = getSharedPreferences("saveDataPush", MODE_PRIVATE);
         jsonPreferences = prefs.getString("savedData", "");
+
+        save_rewind.setVisibility(View.VISIBLE);
+
+        if(jsonPreferences.equals("")){
+            save_rewind.setVisibility(View.GONE);
+        }else{
+            save_rewind.setVisibility(View.VISIBLE);
+        }
+
 
 
 
@@ -116,7 +125,7 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
             public void onCardSwiped(Direction direction) {
                 if (manager.getTopPosition() == adapter.getItemCount()) {
                     // -------------------- last position reached, do something ---------------------
-                    save_rewind.setVisibility(View.VISIBLE);
+
                 }
             }
 
@@ -141,6 +150,7 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(saved_posts.this, "click", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -182,7 +192,6 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
         cardStackView.setItemAnimator(new DefaultItemAnimator());
 
 
-
         save_rewind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,12 +202,13 @@ public class saved_posts extends AppCompatActivity implements CardStackListener{
                         .setInterpolator(new DecelerateInterpolator())
                         .build();
 
+                cardStackView.rewind();
                 CardStackLayoutManager cardStackLayoutManager2 = new CardStackLayoutManager(saved_posts.this);
                 cardStackLayoutManager2.setRewindAnimationSetting(settings);
                 cardStackLayoutManager2.setDirections(Direction.VERTICAL);
                 cardStackView.setLayoutManager(cardStackLayoutManager2);
                 cardStackLayoutManager2.setCanScrollHorizontal(false);
-                cardStackView.rewind();
+
                 save_rewind.setVisibility(View.GONE);
             }
         });

@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -158,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
         selectedlang = sharedPreferences.getString("selectedlang", "English");
 //        Toast.makeText(MainActivity.this, selectedlang, Toast.LENGTH_SHORT).show();
 
+        global.userlogged.add(fb_user);
+
 
         Log.e("Username Activity :: ", user);
         finalcheck = sharedPreferences.getInt("notify", 0);
@@ -184,7 +187,9 @@ public class MainActivity extends AppCompatActivity {
         checkNoti = sharedPreferences.getInt("reguCustome", 0);
         timefinal = sharedPreferences.getString("realTime", "");
         Log.e("checkNotification :: ", String.valueOf(checkNoti));
-        Log.e("timeFinal :: ", String.valueOf(timefinal));
+        Log.e("timeset main :: ", global.timenotify );
+
+
 
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
@@ -196,11 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
+                global.userlogged.add(personName);
                 Log.e("Google photo :: ", String.valueOf(personPhoto));
                 Log.e("useruser photo :: ", String.valueOf(personName));
                 editor.putString("user_final", personName);
                 Log.e("Username google :: ", user);
-                addDataToDatabase(personName, personName, personName, personEmail, String.valueOf(personPhoto));
+//                addDataToDatabase(personName, personName, personName, personEmail, String.valueOf(personPhoto));
                 editor.putString("google_photo", String.valueOf(personPhoto));
                 editor.putInt("method", 1);
                 editor.putString("google_image", String.valueOf(personPhoto));
@@ -247,13 +253,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        refresh_but.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                m_Runnable.run();
-//            }
-//        });
-
 
         m_Runnable.run();
         relativeLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -290,8 +289,9 @@ public class MainActivity extends AppCompatActivity {
                     TabLayout tabLayout = findViewById(R.id.mainTitletab);
                     tabLayout.setupWithViewPager(viewPager);
                     tabLayout.getTabAt(1).select();
+
                 }
-            }, 2000);
+            }, 1800);
 
 //            Toast.makeText(MainActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
             MainActivity.this.mHandler.postDelayed(m_Runnable, 1200000);
@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
 //                        txt_mins.setText(String.valueOf(min));
 //                        txt_sec.setText(String.valueOf(sec));
 
-                        if (timefinal.equals(hrs + ":" + min + ":" + sec)) {
+                        if (global.timenotify.equals(hrs + ":" + min + ":" + sec)) {
                             Log.e("nownow min", "now send notification");
                             doitnow = 1;
                             addListPolitics();
@@ -456,7 +456,9 @@ public class MainActivity extends AppCompatActivity {
         builder.setContentText(Short);
         builder.setBadgeIconType(R.drawable.papanews);
         builder.setSmallIcon(R.drawable.papanews);
+        builder.setCategory("Politics");
         builder.setAutoCancel(true);
+
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -1190,7 +1192,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        finishAffinity();
+
     }
 }

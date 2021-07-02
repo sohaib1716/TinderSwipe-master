@@ -21,6 +21,17 @@
         android:layout_centerHorizontal="true"
         />
 
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/rewind"
+        android:backgroundTint="#ffffff"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/rewind_save"
+        android:visibility="gone"
+        />
+
 
 
     <com.yuyakaido.android.cardstackview.CardStackView
@@ -39,21 +50,12 @@
 
 
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/rewind"
-        android:backgroundTint="#ffffff"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/rewind_save"
-        android:visibility="gone"
-        />
+
 
 
     <TextView
-        android:id="@+id/savpost"
         android:visibility="gone"
+        android:id="@+id/savpost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You have no saved Posts"

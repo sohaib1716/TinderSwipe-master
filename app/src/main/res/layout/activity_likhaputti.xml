@@ -5,7 +5,7 @@
     android:id="@+id/cons"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backact"
+    android:background="@drawable/ic_papabg1"
     tools:context="com.papanews.ak.likhaputti">
     <ScrollView
         android:layout_width="match_parent"
