@@ -1,16 +1,28 @@
 package com.papanews.ak;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +32,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +52,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.papanews.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -50,17 +67,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.papanews.R.drawable.ic_baseline_navigate_before_24;
 import static com.papanews.R.drawable.ic_baseline_pause_24;
 import static com.papanews.R.drawable.ic_baseline_play_arrow_24;
+
+import static com.papanews.ak.App.CHANNEL_ID_1;
+
 
 public class Recomended extends Fragment implements CardStackListener {
 
@@ -92,11 +121,20 @@ public class Recomended extends Fragment implements CardStackListener {
     TextView daten;
 
     //Audio player media
-    private MediaPlayer mMediaPlayer;
-    Button stop, pause,forward;
+//    private MediaPlayer mMediaPlayer;
+    Button stop, pause, forward;
     ImageView play, playimage;
     TextView title, subtitle;
-    int flag, flagflag=0;
+    int flag, flagflag = 0;
+
+    //    notification
+    private NotificationManagerCompat notificationManager;
+    private MediaSessionCompat mediaSession;
+    int notimedia;
+    Context context;
+    PendingIntent btPendingIntent;
+    int playpausenoti = 0;
+    int value = 0;
 
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -119,8 +157,11 @@ public class Recomended extends Fragment implements CardStackListener {
         title = view.findViewById(R.id.audioTitlle);
         subtitle = view.findViewById(R.id.audioSub);
         forward = view.findViewById(R.id.forward);
-        mMediaPlayer = new MediaPlayer();
         title.setSelected(true);
+
+//        Notification manager
+        notificationManager = NotificationManagerCompat.from(getActivity());
+        mediaSession = new MediaSessionCompat(getActivity(), "tag");
 
 
         if (addListReco().isEmpty()) {
@@ -156,6 +197,7 @@ public class Recomended extends Fragment implements CardStackListener {
 //                startActivity(i);
 //            }
 //        });
+
 
         rewind_view.bringToFront();
 
@@ -204,6 +246,63 @@ public class Recomended extends Fragment implements CardStackListener {
         editor.putStringSet(datatype, set);
         Log.e("list list ::", String.valueOf(set));
 //        editor.commit();
+
+//        sendNotification(, new IntentFilter("pause"));
+    }
+
+
+    public void sendNotification(final int icon, final String title, final String text, String image) {
+
+        Picasso.get().load(image).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                // loaded bitmap is here (bitmap)
+                Intent buttonIntent = new Intent(getActivity(), MediaPlayerService.class);
+                buttonIntent.putExtra("pause", 1);
+                btPendingIntent = PendingIntent.getBroadcast(getContext(), 1, buttonIntent, 0);
+
+
+                Notification channel = new NotificationCompat.Builder(getContext(), CHANNEL_ID_1)
+                        .setSmallIcon(R.drawable.papanews)
+                        .setContentTitle(title)
+                        .setContentText(text)
+                        .setLargeIcon(bitmap)
+                        .addAction(R.drawable.ic_baseline_content_paste_24, "like", null)
+                        .addAction(ic_baseline_navigate_before_24, "Play", null)
+                        .addAction(icon, "pause", btPendingIntent)
+                        .addAction(R.drawable.ic_baseline_navigate_next_24, "next", null)
+                        .addAction(R.drawable.ic_baseline_content_paste_24, "dislike", null)
+                        .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                                .setShowActionsInCompactView(1, 2, 3))
+                        .build();
+                notificationManager.notify(1, channel);
+
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {}
+        });
+
+    }
+
+    private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("sender reciever", "Got message: " + message);
+        }
+    };
+
+    @Override
+    public void onDestroyView() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(myReceiver);
+        super.onDestroyView();
     }
 
 
@@ -227,6 +326,7 @@ public class Recomended extends Fragment implements CardStackListener {
 
     }
 
+
     @Override
     public void onCardSwiped(Direction direction) {
 
@@ -235,8 +335,8 @@ public class Recomended extends Fragment implements CardStackListener {
             // -------------------- last position reached, do something ---------------------
             rewind_view.setVisibility(View.VISIBLE);
             normal.setVisibility(View.VISIBLE);
-            if (mMediaPlayer.isPlaying()) {
-                mMediaPlayer.pause();
+            if (global.mMediaPlayer.isPlaying()) {
+                global.mMediaPlayer.pause();
                 flagflag = 0;
                 flag = 0;
                 play.setBackgroundResource(ic_baseline_play_arrow_24);
@@ -274,6 +374,7 @@ public class Recomended extends Fragment implements CardStackListener {
             Log.e("buhuhuhu :: ", product.getString("converted"));
 
 
+
             Picasso.get().load(product.getString("image")).placeholder(R.drawable.noimage)
                     .resize(250, 250)
                     .into(playimage);
@@ -281,29 +382,46 @@ public class Recomended extends Fragment implements CardStackListener {
             title.setText(product.getString("title"));
             subtitle.setText(product.getString("sourcename"));
 
-            mMediaPlayer.reset();
-            mMediaPlayer.setDataSource(product.getString("converted"));
-            mMediaPlayer.prepare();
+            global.mMediaPlayer.reset();
+            global.mMediaPlayer.setDataSource(product.getString("converted"));
+            global.mMediaPlayer.prepare();
 
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            global.mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     // TODO Auto-generated method stub
                     //here you can stop your recording thread.
+                    notimedia = 1;
                     cardStackView.swipe();
                 }
             });
 
-            if(flagflag==1){
+            if (flagflag == 1) {
                 play.setBackgroundResource(ic_baseline_pause_24);
-                mMediaPlayer.start();
-            }else if(flagflag==0){
+                global.mMediaPlayer.start();
+            } else if (flagflag == 0) {
                 play.setBackgroundResource(ic_baseline_play_arrow_24);
             }
+
+
+//            notification manager
+            if (notimedia == 1) {
+                notimedia = 0;
+                try {
+                    sendNotification(ic_baseline_pause_24, product.getString("title"),
+                            product.getString("sourcename"),
+                            product.getString("image"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             forward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    notimedia = 1;
                     cardStackView.swipe();
                 }
             });
@@ -313,18 +431,34 @@ public class Recomended extends Fragment implements CardStackListener {
                 @Override
                 public void onClick(View v) {
                     Log.e("gfdsfsfs one :: ", String.valueOf(flag));
-                    if (mMediaPlayer.isPlaying()) {
-                        mMediaPlayer.pause();
+                    if (global.mMediaPlayer.isPlaying()) {
+                        try {
+                            sendNotification(ic_baseline_play_arrow_24, product.getString("title"),
+                                    product.getString("sourcename"),
+                                    product.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        global.mMediaPlayer.pause();
                         flagflag = 0;
 //                        draw = getResources().getDrawable(ic_baseline_play_arrow_24);
 //                        play.setImageDrawable(draw);
                         play.setBackgroundResource(ic_baseline_play_arrow_24);
+
                     } else {
+                        try {
+                            sendNotification(ic_baseline_pause_24, product.getString("title"),
+                                    product.getString("sourcename"),
+                                    product.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         flag = 1;
                         flagflag = 1;
 //                        draw = getResources().getDrawable(ic_baseline_pause_24);
                         play.setBackgroundResource(ic_baseline_pause_24);
-                        mMediaPlayer.start();
+                        global.mMediaPlayer.start();
                     }
                 }
             });
@@ -334,22 +468,21 @@ public class Recomended extends Fragment implements CardStackListener {
                 @Override
                 public void onClick(View v) {
                     Log.e("gfdsfsfs :: ", String.valueOf(flag));
-                    if(flag==1){
-                        mMediaPlayer.reset();
+                    if (flag == 1) {
+                        global.mMediaPlayer.reset();
                         try {
                             play.setBackgroundResource(ic_baseline_pause_24);
-                            mMediaPlayer.setDataSource(product.getString("converted"));
-                            mMediaPlayer.prepare();
-                            mMediaPlayer.start();
+                            global.mMediaPlayer.setDataSource(product.getString("converted"));
+                            global.mMediaPlayer.prepare();
+                            global.mMediaPlayer.start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        flag=0;
+                        flag = 0;
                         flagflag = 1;
-                    }
-                    else if (flag == 0) {
+                    } else if (flag == 0) {
                         cardStackView.rewind();
                     }
                 }
@@ -431,7 +564,8 @@ public class Recomended extends Fragment implements CardStackListener {
                     intent.setType("image/jpg");
                     intent.putExtra(Intent.EXTRA_STREAM, uri);
                     try {
-                        intent.putExtra(Intent.EXTRA_TEXT, product.getString("title"));
+                        intent.putExtra(Intent.EXTRA_TEXT, product.getString("title") +
+                                "\nFor more updates download: https://play.google.com/store/apps/details?id=com.papanews");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -491,9 +625,9 @@ public class Recomended extends Fragment implements CardStackListener {
 
     private void playAudio(String datatoplay) {
         try {
-            mMediaPlayer.setDataSource(datatoplay);
-            mMediaPlayer.prepare();
-            mMediaPlayer.start();
+            global.mMediaPlayer.setDataSource(datatoplay);
+            global.mMediaPlayer.prepare();
+            global.mMediaPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }

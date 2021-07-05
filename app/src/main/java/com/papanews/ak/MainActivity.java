@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
 
 
-
     ConstraintLayout relativeLayout;
     private static final String URL_RECOMENDED = "http://192.168.31.131/LoginRegister/getPolitics.php";
     private static final String URL_POLITICS = "http://papanews.in/PapaNews/getPolitics.php";
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 intro.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
             }
-        }, 30000);
+        }, 2000);
 
         final ConnectionDectector cd = new ConnectionDectector(this);
         if (!(cd.isConnected())) {
@@ -187,9 +186,7 @@ public class MainActivity extends AppCompatActivity {
         checkNoti = sharedPreferences.getInt("reguCustome", 0);
         timefinal = sharedPreferences.getString("realTime", "");
         Log.e("checkNotification :: ", String.valueOf(checkNoti));
-        Log.e("timeset main :: ", global.timenotify );
-
-
+        Log.e("timeset main :: ", global.timenotify);
 
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
@@ -280,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
             addListInfluence();
             progressBar.setVisibility(View.VISIBLE);
 
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -291,7 +289,8 @@ public class MainActivity extends AppCompatActivity {
                     tabLayout.getTabAt(1).select();
 
                 }
-            }, 1800);
+            }, 2000);
+
 
 //            Toast.makeText(MainActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
             MainActivity.this.mHandler.postDelayed(m_Runnable, 1200000);
@@ -321,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                                     //adding the product to product list
                                     Log.e("languagefsfds one :: ", product.getString("language"));
                                     if (selectedlang.equals(product.getString("language"))) {
-                                        Log.e("languagefsfds two :: ",product.getString("language"));
+                                        Log.e("languagefsfds two :: ", product.getString("language"));
                                         itemsreco.add(new ItemModel(
                                                 product.getString("title"),
                                                 product.getString("image"),
@@ -378,23 +377,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-//        if(pre_array != finalcheck && flag==1){
-//            Log.e("notification final :: ", String.valueOf(global.notificationArray));
-//            flag = 0;
-//            pre_array = finalcheck;
-//            for(int jk=pre_array;jk<array.length();jk++){
-//                NotificationCompat.Builder builder =
-//                        new NotificationCompat.Builder(MainActivity.this,"notify");
-//                builder.setContentTitle(global.notificationArray.get(jk).get("sourceName"));
-//                builder.setContentText(global.notificationArray.get(jk).get("sourceImage "));
-//                builder.setSmallIcon(R.drawable.toi);
-//                builder.setAutoCancel(true);
-//
-//                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-//                managerCompat.notify(check,builder.build());
-//                check++;
-//            }
-//        }
     }
 
     int min;
@@ -415,9 +397,9 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("timetime hours", String.valueOf(hrs));
-                        Log.e("timetime min", String.valueOf(min));
-                        Log.e("timetime check", hrs + ":" + min + ":" + sec);
+//                        Log.e("timetime hours", String.valueOf(hrs));
+//                        Log.e("timetime min", String.valueOf(min));
+//                        Log.e("timetime check", hrs + ":" + min + ":" + sec);
 //                        txt_hrs.setText(String.valueOf(hrs));
 //                        txt_mins.setText(String.valueOf(min));
 //                        txt_sec.setText(String.valueOf(sec));
@@ -449,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("WrongConstant")
-    private void notificationFunction(String title, String Short){
+    private void notificationFunction(String title, String Short) {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(MainActivity.this, "notify");
         builder.setContentTitle(title);
@@ -509,13 +491,13 @@ public class MainActivity extends AppCompatActivity {
                                     ));
 
 
-                                    if (send_notification.contains("politics")){
+                                    if (send_notification.contains("politics")) {
 
-                                        if(checkNoti==0){
+                                        if (checkNoti == 0) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
-                                        if(checkNoti==1 && doitnow==1){
+                                        if (checkNoti == 1 && doitnow == 1) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
@@ -892,7 +874,7 @@ public class MainActivity extends AppCompatActivity {
 
         final List<ItemModel> items_politics = new ArrayList<>();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL_INTERNATIONAL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_INTERNATIONAL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -925,13 +907,13 @@ public class MainActivity extends AppCompatActivity {
                                     ));
 
 
-                                    if (send_notification.contains("international")){
+                                    if (send_notification.contains("international")) {
 
-                                        if(checkNoti==0){
+                                        if (checkNoti == 0) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
-                                        if(checkNoti==1 && doitnow==1){
+                                        if (checkNoti == 1 && doitnow == 1) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
@@ -961,7 +943,7 @@ public class MainActivity extends AppCompatActivity {
 
         final List<ItemModel> items_politics = new ArrayList<>();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL_INFLUENCE,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_INFLUENCE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -994,13 +976,13 @@ public class MainActivity extends AppCompatActivity {
                                     ));
 
 
-                                    if (send_notification.contains("influence")){
+                                    if (send_notification.contains("influence")) {
 
-                                        if(checkNoti==0){
+                                        if (checkNoti == 0) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
-                                        if(checkNoti==1 && doitnow==1){
+                                        if (checkNoti == 1 && doitnow == 1) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
@@ -1030,7 +1012,7 @@ public class MainActivity extends AppCompatActivity {
 
         final List<ItemModel> items_politics = new ArrayList<>();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL_MISCEL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MISCEL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1063,13 +1045,13 @@ public class MainActivity extends AppCompatActivity {
                                     ));
 
 
-                                    if (send_notification.contains("miscell")){
+                                    if (send_notification.contains("miscell")) {
 
-                                        if(checkNoti==0){
+                                        if (checkNoti == 0) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
-                                        if(checkNoti==1 && doitnow==1){
+                                        if (checkNoti == 1 && doitnow == 1) {
                                             notificationFunction(product.getString("sourceName"),
                                                     product.getString("title"));
                                         }
@@ -1094,8 +1076,6 @@ public class MainActivity extends AppCompatActivity {
         Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
         return items_politics;
     }
-
-
 
 
     private void addDataToDatabase(final String fullname, final String username,

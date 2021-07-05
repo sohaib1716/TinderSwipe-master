@@ -1,5 +1,6 @@
 package com.papanews.ak;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +28,12 @@ public class global {
     public static String hindilang = "";
 
     public static int logincheck = 0;
+
+//  notification mediplayer
+    public static int playpause = 0;
+
+    public static MediaPlayer mMediaPlayer = new MediaPlayer();
+
 
 
 

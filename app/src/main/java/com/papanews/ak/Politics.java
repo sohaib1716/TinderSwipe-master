@@ -1,6 +1,10 @@
 package com.papanews.ak;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -10,6 +14,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +28,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +42,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.papanews.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -56,8 +65,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.papanews.R.drawable.ic_baseline_navigate_before_24;
 import static com.papanews.R.drawable.ic_baseline_pause_24;
 import static com.papanews.R.drawable.ic_baseline_play_arrow_24;
+import static com.papanews.ak.App.CHANNEL_ID_1;
 
 public class Politics extends Fragment implements CardStackListener {
 
@@ -101,6 +112,15 @@ public class Politics extends Fragment implements CardStackListener {
     TextView title, subtitle;
     int flag, flagflag=0;
 
+
+    //    notification
+    private NotificationManagerCompat notificationManager;
+    private MediaSessionCompat mediaSession;
+    int notimedia;
+    Context context;
+    PendingIntent btPendingIntent;
+    int playpausenoti = 0;
+    int value = 0;
 
 
     //    Dynamic product bringing activity here
@@ -218,6 +238,59 @@ public class Politics extends Fragment implements CardStackListener {
     }
 
 
+    public void sendNotification(final int icon, final String title, final String text, String image) {
+
+        Picasso.get().load(image).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                // loaded bitmap is here (bitmap)
+                Intent buttonIntent = new Intent(getActivity(), MediaPlayerService.class);
+                buttonIntent.putExtra("pause", 1);
+                btPendingIntent = PendingIntent.getBroadcast(getContext(), 1, buttonIntent, 0);
+
+
+                Notification channel = new NotificationCompat.Builder(getContext(), CHANNEL_ID_1)
+                        .setSmallIcon(R.drawable.papanews)
+                        .setContentTitle(title)
+                        .setContentText(text)
+                        .setLargeIcon(bitmap)
+                        .addAction(R.drawable.ic_baseline_content_paste_24, "like", null)
+                        .addAction(ic_baseline_navigate_before_24, "Play", null)
+                        .addAction(icon, "pause", btPendingIntent)
+                        .addAction(R.drawable.ic_baseline_navigate_next_24, "next", null)
+                        .addAction(R.drawable.ic_baseline_content_paste_24, "dislike", null)
+                        .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                                .setShowActionsInCompactView(1, 2, 3))
+                        .build();
+                notificationManager.notify(1, channel);
+
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {}
+        });
+    }
+
+    private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("sender reciever", "Got message: " + message);
+        }
+    };
+
+    @Override
+    public void onDestroyView() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(myReceiver);
+        super.onDestroyView();
+    }
+
 
 
     @SuppressLint("LongLogTag")
@@ -282,9 +355,12 @@ public class Politics extends Fragment implements CardStackListener {
         try {
             array = new JSONArray(jsonPreferences);
             product = array.getJSONObject(position);
-            Log.e("closer :: ", String.valueOf(product));
-
+//            Log.e("buhuhuhu :: ", String.valueOf(product));
             daten.setText(product.getString("date"));
+
+            Log.e("buhuhuhu :: ", product.getString("converted"));
+
+
 
             Picasso.get().load(product.getString("image")).placeholder(R.drawable.noimage)
                     .resize(250, 250)
@@ -293,31 +369,46 @@ public class Politics extends Fragment implements CardStackListener {
             title.setText(product.getString("title"));
             subtitle.setText(product.getString("sourcename"));
 
-            mMediaPlayer.reset();
-            mMediaPlayer.setDataSource(product.getString("converted"));
-            mMediaPlayer.prepare();
+            global.mMediaPlayer.reset();
+            global.mMediaPlayer.setDataSource(product.getString("converted"));
+            global.mMediaPlayer.prepare();
 
 
-
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            global.mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     // TODO Auto-generated method stub
                     //here you can stop your recording thread.
+                    notimedia = 1;
                     cardStackView.swipe();
                 }
             });
 
-            if(flagflag==1){
+            if (flagflag == 1) {
                 play.setBackgroundResource(ic_baseline_pause_24);
-                mMediaPlayer.start();
-            }else if(flagflag==0){
+                global.mMediaPlayer.start();
+            } else if (flagflag == 0) {
                 play.setBackgroundResource(ic_baseline_play_arrow_24);
             }
+
+
+//            notification manager
+            if (notimedia == 1) {
+                notimedia = 0;
+                try {
+                    sendNotification(ic_baseline_pause_24, product.getString("title"),
+                            product.getString("sourcename"),
+                            product.getString("image"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             forward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    notimedia = 1;
                     cardStackView.swipe();
                 }
             });
@@ -327,18 +418,34 @@ public class Politics extends Fragment implements CardStackListener {
                 @Override
                 public void onClick(View v) {
                     Log.e("gfdsfsfs one :: ", String.valueOf(flag));
-                    if (mMediaPlayer.isPlaying()) {
-                        mMediaPlayer.pause();
+                    if (global.mMediaPlayer.isPlaying()) {
+                        try {
+                            sendNotification(ic_baseline_play_arrow_24, product.getString("title"),
+                                    product.getString("sourcename"),
+                                    product.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        global.mMediaPlayer.pause();
                         flagflag = 0;
 //                        draw = getResources().getDrawable(ic_baseline_play_arrow_24);
 //                        play.setImageDrawable(draw);
                         play.setBackgroundResource(ic_baseline_play_arrow_24);
+
                     } else {
+                        try {
+                            sendNotification(ic_baseline_pause_24, product.getString("title"),
+                                    product.getString("sourcename"),
+                                    product.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         flag = 1;
                         flagflag = 1;
 //                        draw = getResources().getDrawable(ic_baseline_pause_24);
                         play.setBackgroundResource(ic_baseline_pause_24);
-                        mMediaPlayer.start();
+                        global.mMediaPlayer.start();
                     }
                 }
             });
@@ -348,22 +455,21 @@ public class Politics extends Fragment implements CardStackListener {
                 @Override
                 public void onClick(View v) {
                     Log.e("gfdsfsfs :: ", String.valueOf(flag));
-                    if(flag==1){
-                        mMediaPlayer.reset();
+                    if (flag == 1) {
+                        global.mMediaPlayer.reset();
                         try {
                             play.setBackgroundResource(ic_baseline_pause_24);
-                            mMediaPlayer.setDataSource(product.getString("converted"));
-                            mMediaPlayer.prepare();
-                            mMediaPlayer.start();
+                            global.mMediaPlayer.setDataSource(product.getString("converted"));
+                            global.mMediaPlayer.prepare();
+                            global.mMediaPlayer.start();
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        flag=0;
+                        flag = 0;
                         flagflag = 1;
-                    }
-                    else if (flag == 0) {
+                    } else if (flag == 0) {
                         cardStackView.rewind();
                     }
                 }
